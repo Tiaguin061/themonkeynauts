@@ -1,8 +1,11 @@
+import { AppRoutes } from './routes';
+import { GlobalStyle } from './styles/global';
 
 export function App() {
   return (
-    <div>
-      <h1>Template</h1>
-    </div>
+    <>
+      <AppRoutes />
+      <GlobalStyle />
+    </>
   );
 }
