@@ -10,10 +10,12 @@ import { useBoolean } from '@/hooks';
 
 import {
   Container,
+  Content
 } from './styles';
 
 export type InputProps = React.HTMLAttributes<HTMLInputElement> & {
   name: string;
+  labelText?: string;
   type: HTMLInputTypeAttribute;
   containerProps?: React.HTMLAttributes<HTMLLabelElement>
 }
@@ -21,6 +23,7 @@ export type InputProps = React.HTMLAttributes<HTMLInputElement> & {
 export function Input({
   type,
   name,
+  labelText,
   containerProps,
   ...rest
 }: InputProps) {
@@ -28,6 +31,7 @@ export function Input({
   const { fieldName, defaultValue, registerField, error } = useField(name)
 
   const passwordVisible = useBoolean(false);
+  const isFocused = useBoolean(false);
 
   function handlePasswordVisible(changeStateTo: boolean) {
     if(changeStateTo) {
@@ -56,31 +60,43 @@ export function Input({
   }, [fieldName, registerField]);
 
   return (
-    <Container {...containerProps}>
-      <input 
-        type={type}
-        name={name}
-        ref={inputRef}
-        defaultValue={defaultValue}
-        {...rest}
-      />
-      {type === 'password' && passwordVisible ? (
-        <button
-          title="Hide password"
-          onClick={() => handlePasswordVisible(false)}
-          className="change_visible_password"
-        >
-          <AiFillEyeInvisible />
-        </button>
-      ): (
-        <button
-          title="Show password"
-          onClick={() => handlePasswordVisible(true)}
-          className="change_visible_password"
-        >
-          <AiFillEye />
-        </button>
-      )}
+    <Container {...containerProps} isError={!!error}>
+      <span className="input_text">{labelText}</span>
+      <Content
+        isFocused={isFocused.state}
+        isError={!!error}
+        onClick={() => isFocused.changeToTrue()}
+      >
+        <input 
+          type={type === 'password' && passwordVisible.state ? 'text': type}
+          name={name}
+          ref={inputRef}
+          defaultValue={defaultValue}
+          onFocus={() => isFocused.changeToTrue()}
+          onBlur={() => isFocused.changeToFalse()}
+          {...rest}
+        />
+        {type === 'password' && (
+          passwordVisible.state ? (
+            <button
+              title="Hide password"
+              onClick={() => handlePasswordVisible(false)}
+              className="change_visible_password"
+            >
+              <AiFillEyeInvisible />
+            </button>
+          ) : (
+            <button
+              title="Show password"
+              onClick={() => handlePasswordVisible(true)}
+              className="change_visible_password"
+            >
+              <AiFillEye />
+            </button>
+          )
+        )}
+      </Content>
+      <span className="input_error">{error}</span>
     </Container>
   )
 }
