@@ -4,9 +4,9 @@ export const COLORS = {
   },
   
   colors: {
-    blue_0: '#60b2ff',
-    blue_50: '#2697FF',
-    blue_100: '#062043',
+    primary_0: '#60b2ff',
+    secondary_50: '#2697FF',
+    tertiary_100: '#062043',
 
     gray_blue: '#51779A',
   },
