@@ -4,7 +4,7 @@ import {
   useRef,
 } from 'react';
 import { useField } from '@unform/core';
-import { AiFillEye, AiFillEyeInvisible } from 'react-icons/all';
+import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 
 import { useBoolean } from '@/hooks';
 
