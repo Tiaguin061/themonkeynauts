@@ -11,7 +11,7 @@ import {
 } from '@/services/api';
 
 import { getValidationErrors } from '@/utils';
-import { useAuth } from '@/hooks';
+import { useAuth, useBoolean } from '@/hooks';
 
 import logo from '@/assets/images/logo.png';
 
@@ -27,8 +27,12 @@ export function Register() {
   const formRef = useRef<FormHandles>(null);
   const history = useHistory();
 
+  const loadingRegister = useBoolean(false);
+
   async function handleRegisterUser(data: UserType.AppRegisterParams) {
-      try {
+    loadingRegister.changeToTrue();
+
+    try {
       formRef.current?.setErrors({});
 
       const schema = Yup.object().shape({
@@ -43,9 +47,13 @@ export function Register() {
 
       await register(data);
 
+      loadingRegister.changeToFalse();
+
       history.push('/dashboard');
 
     } catch(err) {
+      loadingRegister.changeToFalse();
+
       if(err instanceof Yup.ValidationError) {
         const errors = getValidationErrors(err);
         
@@ -91,6 +99,9 @@ export function Register() {
               className="button_submit" 
               type="submit"
               text="Sign up"
+              loading={{
+                state: loadingRegister.state,
+              }}
             />
 
             <footer>

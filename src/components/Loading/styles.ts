@@ -1,12 +1,16 @@
 import styled, { keyframes } from 'styled-components';
 
+import {
+  COLORS
+} from '@/theme';
+
 type LoadingContainerProps = {
   size?: number;
 };
 
 export const LoadingContainer = styled.div<LoadingContainerProps>`
-  width: ${({size}) => `${size}rem`};
-  height: ${({size}) => `${size}rem`};
+  width: ${({size}) => `${size || 1.4}rem`};
+  height: ${({size}) => `${size || 1.4}rem`};
 `;
 
 const circleLoadingKeyFrame = keyframes`
@@ -24,7 +28,7 @@ export const CircleLoading = styled.svg<LoadingContainerProps>`
   
 	border-radius: 50%;
 
-	border: solid 4px var(--primary-font-color);
+	border: solid 4px ${COLORS.global.white_0};
 	border-right-color: transparent;
 	border-bottom-color: transparent;
 
