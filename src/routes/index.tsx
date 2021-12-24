@@ -11,7 +11,7 @@ export function AppRoutes() {
   return (
     <BrowserRouter>
       <Switch>
-        {/* <CustomRouter component={Login} exact path="/" /> */}
+        <CustomRouter component={Register} exact path="/" />
         <CustomRouter component={Login} path="/login" />
         <CustomRouter component={Register} path="/register" />
       </Switch>
