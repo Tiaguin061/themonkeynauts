@@ -6,7 +6,7 @@ import {
   Container,
 } from './styles';
 
-export type ButtonProps = React.HTMLAttributes<HTMLButtonElement> & {
+export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   text?: string;
   loading?: {
     state: boolean;
