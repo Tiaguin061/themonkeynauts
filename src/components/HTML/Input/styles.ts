@@ -13,7 +13,6 @@ export const Container = styled.label<InputContainerTagProps>`
 
   .input_text {
     margin-bottom: 1.2rem;
-    font-size: 1.2rem;
     font-weight: bold;
     line-height: 1.5rem;
     letter-spacing: 0;
@@ -59,10 +58,20 @@ export const Content = styled.div<InputContentTagProps>`
     background: ${COLORS.colors.tertiary_100};
     padding: 1.4rem;
     width: 100%;
+    letter-spacing: 1px;
     color: ${COLORS.fonts.primary};
+    caret-color: ${COLORS.fonts.primary};
 
     &::placeholder {
       color: ${COLORS.global.input};
+    }
+
+    &:-webkit-autofill {
+      -webkit-box-shadow: 0 0 0 30px ${COLORS.colors.tertiary_100} inset;
+    }
+
+    &:-webkit-autofill {
+      -webkit-text-fill-color: ${COLORS.fonts.primary} !important;
     }
   }
 
