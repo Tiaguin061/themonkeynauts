@@ -28,10 +28,18 @@ export function Input({
   ...rest
 }: InputProps) {
   const inputRef = useRef<HTMLInputElement>(null);
-  const { fieldName, defaultValue, registerField, error } = useField(name)
+  const { fieldName, defaultValue, registerField, error, clearError } = useField(name)
 
   const passwordVisible = useBoolean(false);
   const isFocused = useBoolean(false);
+
+  function handleFocusInput() {
+    isFocused.changeToTrue()
+
+    if(error) {
+      clearError();
+    }
+  }
 
   function handlePasswordVisible(changeStateTo: boolean) {
     if(changeStateTo) {
@@ -40,7 +48,7 @@ export function Input({
       passwordVisible.changeToFalse();
     }
 
-    inputRef.current?.focus();
+    handleFocusInput();
   }
 
   useEffect(() => {
@@ -72,7 +80,7 @@ export function Input({
           name={name}
           ref={inputRef}
           defaultValue={defaultValue}
-          onFocus={() => isFocused.changeToTrue()}
+          onFocus={handleFocusInput}
           onBlur={() => isFocused.changeToFalse()}
           {...rest}
         />
@@ -80,6 +88,7 @@ export function Input({
           passwordVisible.state ? (
             <button
               title="Hide password"
+              type="button"
               onClick={() => handlePasswordVisible(false)}
               className="change_visible_password"
             >
@@ -88,6 +97,7 @@ export function Input({
           ) : (
             <button
               title="Show password"
+              type="button"
               onClick={() => handlePasswordVisible(true)}
               className="change_visible_password"
             >
