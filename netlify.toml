@@ -1,0 +1,10 @@
+[build]
+  command = "yarn build"
+  plubish = "/dist"
+  base = "/"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+  
