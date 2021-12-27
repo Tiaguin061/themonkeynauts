@@ -1,5 +1,5 @@
 import { COLORS, FONTS } from '@/theme';
-import { createGlobalStyle } from 'styled-components';
+import styled, { createGlobalStyle, css } from 'styled-components';
 
 export const GlobalStyle = createGlobalStyle`
   * {
@@ -35,6 +35,8 @@ export const GlobalStyle = createGlobalStyle`
   body, html, #root {
     min-height: 100vh;
     width: 100%;
+
+    background: #010101;
   }
 
   h1, h2, h3, h4, h5, h6, a, p, span, label, button {
@@ -83,3 +85,17 @@ export const GlobalStyle = createGlobalStyle`
     }
   }
 `; 
+
+export type AppContainerProps = {
+  isLoading: boolean;
+}
+
+export const AppContainer = styled.div<AppContainerProps>`
+  ${props => props.isLoading && css`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    height: 100vh;
+  `};
+`;
