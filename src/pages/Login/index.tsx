@@ -91,7 +91,7 @@ export function Login() {
             <Button 
               className="button_submit" 
               type="submit"
-              text="Sign up"
+              text="Login"
               loading={{
                 state: loadingSignIn.state,
               }}
