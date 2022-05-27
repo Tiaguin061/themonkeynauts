@@ -1,0 +1,93 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum PlayerRole {
+  ADMIN
+  PLAYER
+}
+
+model Log {
+  id        String   @id @db.Uuid()
+  playerId  String
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("logs")
+}
+
+model Player {
+  id            String     @id @db.Uuid()
+  nickname      String     @unique
+  email         String     @unique
+  password      String
+  wallet        String?    @unique
+  role          PlayerRole @default(PLAYER)
+  hasAsteroid   Boolean    @default(false)
+  canBountyHunt Boolean    @default(false)
+
+  enabled   Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  playerTokens PlayerToken[]
+
+  ownerMonkeynauts  Monkeynaut[] @relation("owner_monkeynauts")
+  playerMonkeynauts Monkeynaut[] @relation("player_monkeynauts")
+
+  @@map("players")
+}
+
+model PlayerToken {
+  id        String   @id @db.Uuid()
+  playerId  String   @db.Uuid()
+  token     String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  player Player @relation(fields: [playerId], references: [id])
+
+  @@map("player_tokens")
+}
+
+model Monkeynaut {
+  id String @id @db.Uuid()
+
+  owner   Player @relation("owner_monkeynauts", fields: [ownerId], references: [id], onDelete: Cascade)
+  ownerId String @db.Uuid()
+
+  playerId String @db.Uuid()
+  player   Player @relation("player_monkeynauts", fields: [playerId], references: [id], onDelete: Cascade)
+
+  name       String
+  class      String
+  rank       String
+  bonusValue Int
+  bonus      String
+  maxEnergy  Int
+  energy     Int
+  avatar     String?
+
+  basePower      Int
+  baseSpeed      Int
+  baseResistence Int
+  baseHealth     Int
+
+  power      Int
+  speed      Int
+  resistence Int
+  health     Int
+
+  breedCount Int
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("monkeynauts")
+}
