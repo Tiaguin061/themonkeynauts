@@ -24,7 +24,7 @@ parameters -> snake_case
   # function (param_case: string) {}
 
 constructor params -> camelCase
-  # constructor(private createPlayerUseCase: CreatePlayerUseCase) {}
+  # constructor(private createPlayerBusinessLogic: CreatePlayerBusinessLogic) {}
 
 routes -> kebab-case
   # exemple: app.post('/players/player-create')
