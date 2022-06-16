@@ -14,8 +14,6 @@ const getBalance = async () => {
     value: '1000000000000000000',
     data: '',
   });
-
-  console.log(balance);
 };
 
 getBalance();
